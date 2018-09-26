@@ -33,7 +33,8 @@ def perform_answer(m):
     sres = session.fetchone()
     if not sres:
         ssid = uuid.uuid4()
-        cur.execute(f'''INSERT INTO sessions VALUES ('{m['from_id']}', '{ssid}')''')
+        p = (m['from_id'], ssid)
+        cur.execute('INSERT INTO sessions VALUES (?, ?)', p)
         conn.commit()
     else:
         ssid = sres[1]
